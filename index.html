@@ -1,9 +1,21 @@
 <!DOCTYPE html>
+
+
+
+
 <html>
+
+
+
+
+
 <head>
     <title>Multiview</title>
 	<link rel="stylesheet" href="touchui.css" type="text/css" media="screen" charset="utf-8">
 	<script src="touchui.js" type="text/javascript" charset="utf-8"></script>
+
+	
+	
     <style>
             html,body{
                 background-color:#ffffff;
@@ -22,27 +34,75 @@
                             view:"toolbar", 
                             type:"MainBar", 
                             elements:[
-                                {view:"label", label: "Backpackr <sup class='tb_sup'>mobile</sup>", align:'left'}
+                                {view:"label", label: "<FONT COLOR='blue'>Adaptive</FONT> <sup class='tb_sup'>mobile</sup>", align:'left'}
                             ]
                         },
                         {
                             gravity:2,  
                             view:"multiview",
-                            cells:[    
-                                {
-                                    id:"games",
-                                    view:"list",
-                                    url:"games.xml",
-                                    datatype:"xml",
-                                    template:"#name#",
-                                    select:1
+                            cells:[ 
+                                {id:"games",
+								rows:[
+										{
+										view:"form", id:"games1", height: 90,elements:[{view:"text", label: 'Search' , name:"searchtext", id:"searchtext", position: "label-left"}, 
+				            {view:"button", type:"round", label:"Search",click:"login();"}]  
+										},
+								{
+								cols:[ 
+										{
+				id:"grid",
+				view:"grid",
+				select:"multiselect",
+				fields:[
+					
+					{
+						id:"item_name",
+						width:180,
+						label:"Item Name",
+						template:"#item_name#",
+						type:"custom"
+					},
+					{
+						id:"item_type",
+						width:140,
+						label:"Item Type",
+						template:"#item_type#",
+						type:"custom"
+					}
+					
+				],
+				datatype:"json", url:"http://192.168.2.4:8091/a3-6.2.162/JSONMikeClassThread.do"
+			}
+										]
+								}]
+                                   
+									
+									
                                 },
-                                {   id:"video",
-                                    view:"list",
-                                    url:"movies.xml",
-                                    datatype:"xml",
-                                    template:"#name#",
-                                    select:1
+                                {   
+								id:'video',
+								
+									rows:[
+										{
+										       view: "chart",
+            type:"donut",
+            value:"#count#",
+           color:"#color#",
+            legend:{
+                width: 75,
+                align:"right",
+                valign:"middle",
+                template:"#name#"
+            },
+            pieInnerText:"#count#",
+            shadow:0,
+            gradient:true,
+            datatype:"json", url:"http://192.168.2.4:8091/a3-6.2.162/JSONMikeClassChart.do"
+										}
+										]
+                                    
+									
+									
                                 },
                                 {   id:"music",
                                     view:"list",
@@ -57,10 +117,10 @@
                             view:"toolbar", 
                             id:"BottomBar", type:"BottomBar",
                             elements:[
-                            	{ view:"tabbar", id:'tabbar', selected: 'games', multiview:true, inputWidth:300, options: [
-                            	    { label: 'Games', src: 'games.png', value: 'games'},
-                            	    { label: 'Video', src: 'video.png', value: 'video'},
-                            	    { label: 'Music', src: 'music.png', value: 'music'}
+                            	{ view:"tabbar", id:'tabbar', selected: 'games1', multiview:true, inputWidth:300, options: [
+                            	    { label: 'Search', src: 'games.png', value: 'games'},
+                            	    { label: 'Graph1', src: 'video.png', value: 'video'},
+                            	    { label: 'Graph2', src: 'music.png', value: 'music'}
                             		]}
                                 ]
                         }    
@@ -68,16 +128,50 @@
             };
         dhx.ready(function(){
 	
-    		
             
            
             dhx.ui(config);
+						
+						
            
         });
         
         
-                
+               
     </script>
+
+	<script>
+    function login(){
+
+
+var searchfor = $$('searchtext').getValue();
+var url="";
+url=url.concat("http://192.168.2.4:8091/a3-6.2.162/JSONMikeClassThread.do?search='", searchfor,"'");
+
+
+$$('grid').clearAll();
+$$('grid').load(url);
+$$('grid').refresh();
+
+
+		
+       
+    }
+</script>
+	
+<script>
+    function afterCall(text, xml){
+dhx.alert("afterCall!");
+        var data = dhx.DataDriver.json.toObject(text,xml);
+        if (data.result == "success"){
+            /*shows "loggedIn" view*/
+            $$("loggedIn").show();
+        } else{
+            dhx.alert("The login and password are incorrect!");
+        }
+    }
+</script>
+
 <body>
 
     <div style="width:320px;height:450px;border:1px solid #ADADAD; margin:50px;">
@@ -85,6 +179,5 @@
 		</div>
 	</div>
 
-</body>
-</html>
 
+</body>
