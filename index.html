@@ -11,6 +11,7 @@
 
 <head>
     <title>Multiview</title>
+	<meta name = "viewport" content = "initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no">
 	<link rel="stylesheet" href="touchui.css" type="text/css" media="screen" charset="utf-8">
 	<script src="touchui.js" type="text/javascript" charset="utf-8"></script>
 
@@ -128,10 +129,8 @@
             };
         dhx.ready(function(){
 	
-            
-           
             dhx.ui(config);
-						
+			dhx.ui.fullScreen();
 						
            
         });
