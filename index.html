@@ -1,22 +1,10 @@
 <!DOCTYPE html>
-
-
-
-
 <html>
-
-
-
-
-
 <head>
+<meta name = "viewport" content = "initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no">
     <title>Multiview</title>
-	<meta name = "viewport" content = "initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no">
 	<link rel="stylesheet" href="touchui.css" type="text/css" media="screen" charset="utf-8">
 	<script src="touchui.js" type="text/javascript" charset="utf-8"></script>
-
-	
-	
     <style>
             html,body{
                 background-color:#ffffff;
@@ -128,11 +116,8 @@
     				]
             };
         dhx.ready(function(){
-	
+	dhx.ui.fullScreen();
             dhx.ui(config);
-			dhx.ui.fullScreen();
-						
-           
         });
         
         
@@ -141,20 +126,12 @@
 
 	<script>
     function login(){
-
-
 var searchfor = $$('searchtext').getValue();
 var url="";
 url=url.concat("http://192.168.2.4:8091/a3-6.2.162/JSONMikeClassThread.do?search='", searchfor,"'");
-
-
 $$('grid').clearAll();
 $$('grid').load(url);
 $$('grid').refresh();
-
-
-		
-       
     }
 </script>
 	
@@ -172,11 +149,8 @@ dhx.alert("afterCall!");
 </script>
 
 <body>
-
-    <div style="width:320px;height:450px;border:1px solid #ADADAD; margin:50px;">
+ <div style="width:320px;height:450px;border:1px solid #ADADAD; margin:50px;">
 		<div id="groupBox" style='width:100%; height:100%;'>
 		</div>
 	</div>
-
-
 </body>
